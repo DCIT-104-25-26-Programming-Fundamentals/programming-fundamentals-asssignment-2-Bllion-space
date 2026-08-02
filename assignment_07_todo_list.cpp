@@ -80,3 +80,79 @@
 #include <string>
 using namespace std;
 
+
+void addTask(vector<string>& tasks) {
+    cin.ignore();
+    string task;
+    cout << "Enter task: ";
+    getline(cin, task);
+    tasks.push_back(task);
+    cout << "Task added: \"" << task << "\"" << endl;
+}
+
+void viewTasks(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty!" << endl;
+        return;
+    }
+    cout << "Your Tasks:" << endl;
+    for (int i = 0; i < tasks.size(); i++) {
+        cout << i + 1 << ". " << tasks[i] << endl;
+    }
+}
+
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty!" << endl;
+        return;
+    }
+    viewTasks(tasks);
+    cout << "Enter task number to delete: ";
+    int num;
+    cin >> num;
+
+    if (num < 1 || num > tasks.size()) {
+        cout << "Error: invalid task number." << endl;
+        return;
+    }
+
+    string removed = tasks[num - 1];
+    tasks.erase(tasks.begin() + (num - 1));
+    cout << "Task \"" << removed << "\" has been removed." << endl;
+}
+
+int main() {
+    vector<string> tasks;
+    int choice;
+
+    do {
+        cout << "\n============================\n";
+        cout << "     TO-DO LIST MENU\n";
+        cout << "============================\n";
+        cout << "1. Add task\n";
+        cout << "2. View tasks\n";
+        cout << "3. Delete task\n";
+        cout << "4. Quit\n";
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                cout << "Goodbye!" << endl;
+                break;
+            default:
+                cout << "Error: invalid choice. Please enter 1-4." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
